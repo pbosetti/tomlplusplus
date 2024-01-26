@@ -172,7 +172,7 @@ TOML_IMPL_NAMESPACE_START
 		static_assert(!is_cvref<T>);
 
 		using traits = value_traits<T>;
-		if constexpr (!traits::is_signed)
+		if constexpr (!toml::v3::impl::value_traits<T>::is_signed)
 		{
 			if constexpr ((sizeof(T) * CHAR_BIT) < 63) // 63 bits == int64_max
 			{
