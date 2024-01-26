@@ -2141,7 +2141,7 @@ TOML_IMPL_NAMESPACE_START
 			push_parse_scope(traits::scope_qualifier);
 
 			[[maybe_unused]] int64_t sign = 1;
-			if constexpr (traits::is_signed)
+			if constexpr ((toml::v3::impl::parse_integer_traits<base>::is_signed)
 			{
 				sign = *cp == U'-' ? -1 : 1;
 				if (is_match(*cp, U'+', U'-'))
@@ -2214,7 +2214,7 @@ TOML_IMPL_NAMESPACE_START
 				else
 					result = static_cast<int64_t>(digits[0] - '0');
 
-				if constexpr (traits::is_signed)
+				if constexpr ((toml::v3::impl::parse_integer_traits<base>::is_signed)
 					result *= sign;
 
 				return result;
@@ -2269,7 +2269,7 @@ TOML_IMPL_NAMESPACE_START
 												 std::string_view{ digits, length },
 												 "' is not representable in 64 bits"sv);
 
-				if constexpr (traits::is_signed)
+				if constexpr ((toml::v3::impl::parse_integer_traits<base>::is_signed)
 				{
 					// avoid signed multiply UB when parsing INT64_MIN
 					if TOML_UNLIKELY(sign < 0 && result == i64_max + 1u)
